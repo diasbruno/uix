@@ -14,5 +14,6 @@ struct progress_t {
 void progress_progress_x(struct progress_t* s, float x);
 
 void progress_render(cairo_t* context, struct progress_t* s);
+void progress_render_arc(cairo_t* context, struct progress_t* s);
 
 #endif // __UIX_PROGRESS_H__

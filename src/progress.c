@@ -33,3 +33,40 @@ void progress_render(cairo_t* context, struct progress_t* s) {
                   size->w * s->progress - pa2, size->h - pa2);
   cairo_fill(context);
 }
+
+void progress_render_arc(cairo_t* context, struct progress_t* s) {
+  struct argb_t* bg   = &(s->background);
+  struct vec_t*  p    = &(s->frame.position);
+  struct size_t* size = &(s->frame.size);
+
+  cairo_save(context);
+  cairo_set_source_rgba(context,
+                        1, 1, 1, 1);
+  cairo_rectangle(context,
+                  p->x,
+                  p->y,
+                  size->w,
+                  size->h);
+  cairo_fill(context);
+  /*
+  cairo_set_source_rgba(context, 0, 0, 0, 1);
+  cairo_rectangle(context,
+                  p->x,
+                  p->y,
+                  size->w,
+                  size->h);
+  cairo_stroke(context);
+  */
+
+  cairo_set_source_rgba(context,
+                        bg->r, bg->g, bg->b, bg->a);
+  cairo_translate(context,
+                  (p->x + size->w * 0.5),
+                  (p->y + size->h * 0.5));
+  cairo_set_line_width(context, 5);
+  cairo_arc(context,
+            0, 0, ((size->w - 5) * 0.5), M_PI,
+            (M_PI + s->progress * 2 * M_PI));
+  cairo_stroke(context);
+  cairo_restore(context);
+}
